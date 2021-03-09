@@ -55,7 +55,7 @@
 <body>
     <div class="container">
         <!-- echo 'The first day is : ' . $weekdays[firstDayOfMonth()] . ' the last day is : ' . lastDayOfMonth(); -->
-        <div class="current-date text-center d-block"><?php echo $months[$month+1],' ',$year; ?></div>
+        <div class="current-date text-center d-block"><?php echo $months[$_GET['month']-1],' ',$_GET['year']; ?></div>
         <!-- echo 'Month chosen : ' . $_GET['month'] . 'Year chosen : ' . $_GET['year']; -->
         <div class="calendar-box text-center border border-white border-5 d-block mx-auto p-3">
         <div class="row p-4">
@@ -68,14 +68,14 @@
                 <?php for($j=1;$j<8;$j++) { ?>
                     <div class="col cal py-3 days">
                         <?php
-                            if($k < firstDayOfMonth()) {
+                            if($k < firstDayOfMonth()+1) {
                                 $show = '';
                             }
                             else {
                                 $show++;
                             }
                             $k++;
-                            if($show>$numDays) { $k=1; $show='';};
+                            if($k>$numDays+firstDayOfMonth()+1) { $show='';};
                             echo $show;
                         ?>
                     </div>
@@ -84,25 +84,27 @@
         <?php } ?>
         </div>
         <form class="row g-3" action="" method="get">
-        <div class="col-2">
-            <select class="form-select" aria-label="Select a month" name="month">
-                <!-- <option selected><?= $_GET['month'] ?></option> -->
-                <?php for($monthSelect=0;$monthSelect<12;$monthSelect++) { ?>
-                    <option value="<?= $monthSelect+1 ?>"><?= $months[$monthSelect] ?></option>
-                <?php } ?>
-            </select>
-        </div>
-        <div class="col-2">
-            <select class="form-select" aria-label="Select a year" name="year">
-                <!-- <option selected><?= $_GET['year'] ?></option> -->
-                <?php for($yearSelect=1950;$yearSelect<2051;$yearSelect++) { ?>
-                    <option value="<?= ($yearSelect) ?>"><?= $yearSelect ?></option>
-                <?php } ?>
-            </select>
-        </div>
+            <div class="col-4"></div>
+            <div class="col-2">
+                <select class="form-select" aria-label="Select a month" name="month">
+                    <!-- <option selected><?= $_GET['month'] ?></option> -->
+                    <?php for($monthSelect=0;$monthSelect<12;$monthSelect++) { ?>
+                        <option value="<?= $monthSelect+1 ?>"><?= $months[$monthSelect] ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="col-1">
+                <select class="form-select" aria-label="Select a year" name="year">
+                    <!-- <option selected><?= $_GET['year'] ?></option> -->
+                    <?php for($yearSelect=1950;$yearSelect<2051;$yearSelect++) { ?>
+                        <option value="<?= ($yearSelect) ?>"><?= $yearSelect ?></option>
+                    <?php } ?>
+                </select>
+            </div>
             <div class="col-1">
                 <button class="btn btn-primary" type="submit" value="Send">Confirm</button>
             </div>
+            <div class="col-4"></div>
         </form>
     </div>
     <footer>
